@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.lang.reflect.Array;
@@ -16,17 +17,26 @@ import kmitl.lab03.pimpavee58070101.model.Dot;
 
 public class DotView extends View {
 
+    OnTouchListener listener;
+
     private Paint paint;
     ArrayList<Dot> dots = new ArrayList();
 
     public void addDot(Dot dot) {
         //this.dot = dot;
         dots.add(dot);
-        Log.d("Dot size", String.valueOf(dots.size()));
+        //Log.d("Dot size", String.valueOf(dots.size()));
     }
 
     public void clearDot(){
         dots.clear();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.listener.onTouch(this, event);
+
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -39,6 +49,10 @@ public class DotView extends View {
             }
         }
 
+    }
+
+    public void setListener(OnTouchListener listener) {
+        this.listener = listener;
     }
 
     public DotView(Context context) {
