@@ -6,24 +6,39 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import kmitl.lab03.pimpavee58070101.model.Dot;
 
 public class DotView extends View {
 
     private Paint paint;
-    private Dot dot;
+    ArrayList<Dot> dots = new ArrayList();
 
-    public void setDot(Dot dot) {
-        this.dot = dot;
+    public void addDot(Dot dot) {
+        //this.dot = dot;
+        dots.add(dot);
+        Log.d("Dot size", String.valueOf(dots.size()));
+    }
+
+    public void clearDot(){
+        dots.clear();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setColor(Color.RED);
-        canvas.drawCircle(dot.getCenterX(), dot.getCenterY(), dot.getRadius(), paint);
+        if (dots != null ) {
+            for (Dot dot : dots) {
+                paint.setColor(dot.getColor());
+                canvas.drawCircle(dot.getCenterX(), dot.getCenterY(), dot.getRadius(), paint);
+            }
+        }
+
     }
 
     public DotView(Context context) {
