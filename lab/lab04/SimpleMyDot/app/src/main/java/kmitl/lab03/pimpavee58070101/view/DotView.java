@@ -14,45 +14,51 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import kmitl.lab03.pimpavee58070101.model.Dot;
+import kmitl.lab03.pimpavee58070101.model.Dots;
 
-public class DotView extends View {
-
-    OnTouchListener listener;
+public class DotView extends View{
 
     private Paint paint;
-    ArrayList<Dot> dots = new ArrayList();
+    private Dots allDot;
 
-    public void addDot(Dot dot) {
-        //this.dot = dot;
-        dots.add(dot);
-        //Log.d("Dot size", String.valueOf(dots.size()));
+    public void setDots(Dots dots) {
+        this.allDot = dots;
+
     }
 
-    public void clearDot(){
-        dots.clear();
+    public interface OnDotViewPressListener{
+        void onDotViewPressed(int x, int y);
+    }
+
+    private OnDotViewPressListener onDotViewPressListener;
+    public void setOnDotViewPressListener(OnDotViewPressListener onDotViewPressListener){
+        this.onDotViewPressListener = onDotViewPressListener;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.listener.onTouch(this, event);
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                this.onDotViewPressListener.onDotViewPressed((int)event.getX(), (int)event.getY());
+                return true;
+        }
+        return false;
 
-        return super.onTouchEvent(event);
+//        this.listener.onTouch(this, event);
+//
+//        return super.onTouchEvent(event);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (dots != null ) {
-            for (Dot dot : dots) {
+        if (this.allDot != null ) {
+            for (Dot dot : allDot.getAllDot()) {
                 paint.setColor(dot.getColor());
                 canvas.drawCircle(dot.getCenterX(), dot.getCenterY(), dot.getRadius(), paint);
             }
         }
 
-    }
-
-    public void setListener(OnTouchListener listener) {
-        this.listener = listener;
     }
 
     public DotView(Context context) {

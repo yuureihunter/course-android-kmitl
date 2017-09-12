@@ -6,25 +6,16 @@ public class Dot {
         void onDotChanged(Dot dot);
     }
 
-    private OnDotChangedListener listener;
-
-    public void setListener(OnDotChangedListener listener) {
-        this.listener = listener;
-    }
-
     private int centerX;
     private int centerY;
     private int radius;
     private int color;
 
-    public Dot(int centerX, int centerY, int radius, int color, OnDotChangedListener listener) {
-        this.listener = listener;
+    public Dot(int centerX, int centerY, int radius, int color) {
         this.centerX = centerX;
         this.centerY = centerY;
         this.radius = radius;
         this.color = color;
-
-        this.listener.onDotChanged(this);
     }
 
     public int getColor() {
@@ -33,7 +24,6 @@ public class Dot {
 
     public void setColor(int color) {
         this.color = color;
-        this.listener.onDotChanged(this);
     }
 
     public int getCenterX() {
@@ -42,7 +32,6 @@ public class Dot {
 
     public void setCenterX(int centerX) {
         this.centerX = centerX;
-        this.listener.onDotChanged(this);
     }
 
     public int getCenterY() {
@@ -51,7 +40,6 @@ public class Dot {
 
     public void setCenterY(int centerY) {
         this.centerY = centerY;
-        this.listener.onDotChanged(this);
     }
 
     public int getRadius() {

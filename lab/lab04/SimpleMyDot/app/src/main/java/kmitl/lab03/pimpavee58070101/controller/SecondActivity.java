@@ -1,4 +1,4 @@
-package kmitl.lab03.pimpavee58070101;
+package kmitl.lab03.pimpavee58070101.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import kmitl.lab03.pimpavee58070101.R;
 import kmitl.lab03.pimpavee58070101.model.DotParcelable;
 import kmitl.lab03.pimpavee58070101.model.DotSerializable;
 

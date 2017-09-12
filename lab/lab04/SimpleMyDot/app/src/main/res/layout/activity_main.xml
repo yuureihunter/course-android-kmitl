@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kmitl.lab03.pimpavee58070101.MainActivity">
+    tools:context="kmitl.lab03.pimpavee58070101.controller.MainActivity">
 
     <Button
         android:id="@+id/button"
@@ -39,7 +39,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="27dp"
         android:background="@android:color/holo_orange_dark"
-        android:onClick="onClearDot"
+        android:onClick="onRemoveAll"
         android:text="Clear"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
