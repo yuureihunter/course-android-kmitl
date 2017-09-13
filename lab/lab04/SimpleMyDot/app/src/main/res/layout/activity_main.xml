@@ -46,13 +46,27 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:id="@+id/btnOpenActivity"
+        android:id="@+id/btnShare"
+        android:onClick="onClickShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Open Activity"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="share"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.809"
+        app:layout_constraintLeft_toRightOf="@+id/button"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <!--<Button-->
+        <!--android:id="@+id/btnOpenActivity"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:text="Open Activity"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>

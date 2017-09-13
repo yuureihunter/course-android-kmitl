@@ -1,6 +1,9 @@
 package kmitl.lab03.pimpavee58070101.model;
 
-public class Dot {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Dot implements Parcelable{
 
     public interface OnDotChangedListener {
         void onDotChanged(Dot dot);
@@ -17,6 +20,38 @@ public class Dot {
         this.radius = radius;
         this.color = color;
     }
+
+    protected Dot(Parcel in) {
+        centerX = in.readInt();
+        centerY = in.readInt();
+        radius = in.readInt();
+        color = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(centerX);
+        dest.writeInt(centerY);
+        dest.writeInt(radius);
+        dest.writeInt(color);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Dot> CREATOR = new Creator<Dot>() {
+        @Override
+        public Dot createFromParcel(Parcel in) {
+            return new Dot(in);
+        }
+
+        @Override
+        public Dot[] newArray(int size) {
+            return new Dot[size];
+        }
+    };
 
     public int getColor() {
         return color;

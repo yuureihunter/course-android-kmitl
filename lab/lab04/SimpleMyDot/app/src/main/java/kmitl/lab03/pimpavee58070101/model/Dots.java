@@ -35,7 +35,7 @@ public class Dots {
             int centerX = allDot.get(i).getCenterX();
             int centerY = allDot.get(i).getCenterY();
             double distance = Math.sqrt(Math.pow(centerX - x, 2)) + Math.sqrt(Math.pow(centerY - y, 2));
-            if (distance <= 30){
+            if (distance <= allDot.get(i).getRadius()){
                 return i;
             }
         }

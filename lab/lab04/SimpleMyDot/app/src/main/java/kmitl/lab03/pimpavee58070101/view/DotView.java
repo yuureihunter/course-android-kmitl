@@ -44,9 +44,6 @@ public class DotView extends View{
         }
         return false;
 
-//        this.listener.onTouch(this, event);
-//
-//        return super.onTouchEvent(event);
     }
 
     @Override
