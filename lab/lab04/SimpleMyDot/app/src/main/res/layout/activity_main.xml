@@ -31,7 +31,6 @@
         android:layout_marginTop="0dp"
         android:background="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +60,7 @@
         android:layout_marginRight="8dp"
         android:text="share"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.809"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintLeft_toRightOf="@+id/button"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="8dp"
