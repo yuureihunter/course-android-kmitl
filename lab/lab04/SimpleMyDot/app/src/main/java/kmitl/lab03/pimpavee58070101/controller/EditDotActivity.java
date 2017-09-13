@@ -53,6 +53,8 @@ public class EditDotActivity extends AppCompatActivity {
     }
 
     public void onClickConfirm(View view){
+        Toast.makeText(this, "confirm", Toast.LENGTH_SHORT).show();
+
         dot.setRadius(Integer.parseInt(sizeEditText.getText().toString()));
         Intent intent = new Intent(EditDotActivity.this, MainActivity.class);
         intent.putExtra("dot", dot);
