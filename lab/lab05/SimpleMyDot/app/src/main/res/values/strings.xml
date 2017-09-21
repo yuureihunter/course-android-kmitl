@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SimpleMyDot</string>
+    <string name="random_dot">Random dot</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="size">size</string>
+    <string name="positionx">positionX</string>
+    <string name="cancel">cancel</string>
+    <string name="confirm">confirm</string>
+    <string name="positiony">positionY</string>
+    <string name="clear">Clear</string>
+    <string name="share">share</string>
+</resources>
