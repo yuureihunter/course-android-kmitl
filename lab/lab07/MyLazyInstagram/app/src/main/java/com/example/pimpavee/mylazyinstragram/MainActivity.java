@@ -1,6 +1,10 @@
 package com.example.pimpavee.mylazyinstragram;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.example.pimpavee.mylazyinstragram.adapter.PostAdapter;
 import com.example.pimpavee.mylazyinstragram.api.LazyInstragramApi;
 import com.example.pimpavee.mylazyinstragram.api.UserProfile;
+import com.example.pimpavee.mylazyinstragram.model.FollowRequest;
+import com.example.pimpavee.mylazyinstragram.model.FollowResponse;
 import com.google.gson.Gson;
 
 import okhttp3.OkHttpClient;
@@ -30,11 +37,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.Query;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     RecyclerView recyclerView;
     Spinner spinnerUsrName;
     String userName;
+    private UserProfile userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +103,78 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button buttonFollow = findViewById(R.id.buttonFollow);
+        buttonFollow.setOnClickListener(this);
+
+    }
+
+    private void updateFollowButton(UserProfile userProfile) {
+        Button buttonFollow = findViewById(R.id.buttonFollow);
+        buttonFollow.setText(userProfile.isFollow() ? "Followed" : "Follow");
+        buttonFollow.setBackgroundColor(userProfile.isFollow() ? Color.parseColor("#F2594B") : Color.parseColor("#375FBF"));
+    }
+
+    private void displayError(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
+
+    private AlertDialog createLoadingDialog() {
+        ProgressBar bar = new ProgressBar(this);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(bar)
+                .create();
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        return dialog;
+    }
+
+    private void onClickFollow(){
+        final AlertDialog loadingDialog = createLoadingDialog();
+        loadingDialog.show();
+
+        FollowRequest request = new FollowRequest();
+        request.setUser(userName);
+        request.setFollow(!userProfile.isFollow());
+
+        OkHttpClient client = new OkHttpClient.Builder().build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LazyInstragramApi.BASE)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        LazyInstragramApi lazyInstragramApi = retrofit.create(LazyInstragramApi.class);
+        Call<FollowResponse> call = lazyInstragramApi.follow(request);
+        call.enqueue(new Callback<FollowResponse>() {
+            @Override
+            public void onResponse(Call<FollowResponse> call, Response<FollowResponse> response) {
+                loadingDialog.dismiss();
+                if (response.isSuccessful()) {
+                    userProfile.setFollow(!userProfile.isFollow());
+                    updateFollowButton(userProfile);
+                } else {
+                    displayError("Error!", "There is some thing wrong!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FollowResponse> call, Throwable t) {
+                loadingDialog.dismiss();
+                displayError("Error!", "There is some thing wrong!");
+            }
+        });
+
     }
 
     private void getUserProfile(String usrName){
@@ -114,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
 
                 if (response.isSuccessful()) {
-                    UserProfile userProfile = response.body();
+                    userProfile = response.body();
 //                    TextView textName = (TextView) findViewById(R.id.textName);
 //                    textName.setText("@" + userProfile.getUser());
 
@@ -138,7 +218,11 @@ public class MainActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
                     recyclerView.setAdapter(postAdapter);
 
+                    updateFollowButton(userProfile);
 
+                }
+                else {
+                    displayError("Error!", "There is some thing wrong!");
                 }
 
             }
@@ -163,4 +247,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        onClickFollow();
+    }
 }
