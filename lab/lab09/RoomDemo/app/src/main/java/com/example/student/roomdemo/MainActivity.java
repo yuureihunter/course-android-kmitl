@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             protected void onPostExecute(List<MessageInfo> messageInfos) {
-                ArrayAdapter<MessageInfo> adapter = new ArrayAdapter<MessageInfo>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, messageInfos);
+                ArrayAdapter<MessageInfo> adapter = new ArrayAdapter<MessageInfo>(
+                        MainActivity.this, android.R.layout.simple_list_item_1, messageInfos);
                 super.onPostExecute(messageInfos);
 
                 ListView messageList = findViewById(R.id.messageList);
